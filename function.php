@@ -32,9 +32,17 @@ function login($email, $password){
 
 function addusers($email, $password){
     $passwordHash = password_hash($password,PASSWORD_ARGON2I);
-    $dbh = dbConnect();
-    $stmt = $dbh->prepare("INSERT INTO users VALUES(null, :toto , :tata)");
-    $stmt->bindParam(':toto', $email);
-    $stmt->bindParam(':tata', $passwordHash);
-    $stmt->execute();   
+    $stmt = $dbh->prepare("SELECT * FROM users WHERE users.email=:toto"); // au lieu d'exécuter la requête directement avec query(), on va la préparer avec prepare()
+    $stmt->bindParam(':toto', $email); // on définit a quelle variable va être affecté le marqueur :toto qu'on a utiliser dans la préparation de la requête
+    $stmt->execute(); // on exécute la requête pour de vrai 
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($user){
+        echo "Adresse mail déjà utilisée";
+    }else{
+        $dbh = dbConnect();
+        $stmt = $dbh->prepare("INSERT INTO users VALUES(null, :toto , :tata)");
+        $stmt->bindParam(':toto', $email);
+        $stmt->bindParam(':tata', $passwordHash);
+        $stmt->execute(); 
+    }   
 }
