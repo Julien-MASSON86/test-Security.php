@@ -2,10 +2,13 @@
 require_once 'function.php';
 
 if(isset($_POST) && !empty($_POST)){
-    var_dump($_POST);
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    addusers($email, $password);
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); // nettoyage du mail saisie
+    if(filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+        $password = $_POST['password'];
+        addusers($email, $password);  
+    } else{
+        echo "Cette adresse n'est pas valide";
+    }
 }
 ?>
 

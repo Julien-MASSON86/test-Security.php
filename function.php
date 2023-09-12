@@ -31,6 +31,7 @@ function login($email, $password){
 
 
 function addusers($email, $password){
+    $dbh = dbconnect();
     $passwordHash = password_hash($password,PASSWORD_ARGON2I);
     $stmt = $dbh->prepare("SELECT * FROM users WHERE users.email=:toto"); // au lieu d'exécuter la requête directement avec query(), on va la préparer avec prepare()
     $stmt->bindParam(':toto', $email); // on définit a quelle variable va être affecté le marqueur :toto qu'on a utiliser dans la préparation de la requête
