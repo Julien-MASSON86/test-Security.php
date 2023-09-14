@@ -38,7 +38,7 @@ if(isset($_POST) && !empty($_POST)){
                 <label for="password">Veuillez entrer votre mot de passe</label>
                 <input type="password" name="password" id="password" class="form-control border-black" required>
             </div>
-            <input class="mt-3" type="submit" value="s'inscrire">
+            <input class="mt-4 btn btn-secondary" type="submit" value="s'inscrire">
         </form>
     </main>
     

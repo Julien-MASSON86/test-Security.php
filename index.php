@@ -7,7 +7,7 @@ if(isset($_POST) && !empty($_POST)){
     $password = $_POST['password'];
     login($email, $password);
     if($_SESSION['user']){
-    header('location:index.php?message=Vous êtes connecté&status=success');
+    header('location:page.php?message=Vous êtes connecté&status=success');
     } else {
     header("location:index.php?message=Mot de passe ou adresse email invalide&status=danger");
     }    
@@ -26,14 +26,18 @@ if(isset($_POST) && !empty($_POST)){
     <main class="container">
         <?php if(isset($_GET['message'])&& !empty($_GET['message'])){ ?>
             <div class="alert alert-<?php echo $_GET['status']?> alert-dismissible fade show" role="alert">
-            <strong><?php echo $_GET['message'] ?>!</strong>
+            <strong><?php echo $_GET['message'] ?> !</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
 
        <?php } ?>
         <h1 class="text-center">Connexion utilisateur</h1>
-        <a href="signup.php" class="btn btn-primary">Inscription</a>
+        <?php if(isset($_SESSION['user'])){ ?>
         <a href="logout.php"class="btn btn-primary">Déconnexion</a>
+        <?php } else { ?>
+        <a href="signup.php" class="btn btn-primary">Inscription</a>
+        <?php } ?>
+        
         <form action="" method="post">
             <div>
                 <label for="email">Email</label>
@@ -43,7 +47,7 @@ if(isset($_POST) && !empty($_POST)){
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" class="form-control border-black" required>
             </div>
-            <input class="mt-3" type="submit" value="se connecter">
+            <input class="mt-4 btn btn-secondary" type="submit" value="se connecter">
         </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
