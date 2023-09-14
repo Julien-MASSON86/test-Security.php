@@ -20,11 +20,13 @@ function login($email, $password){
     $hash = $user['password'];
 
     if(password_verify($password, $hash)){
+        session_start();
+        $_SESSION['user'] = [
+            'id' => $user['id_user'],
+            'email' => $user['email']
+        ];
 
-        //comparaison du pass saisi avec celui de la bdd
-            echo 'utilisateur connecté';
-        }else{
-            echo 'mauvais identifiants';
+        
         }
     
 }
